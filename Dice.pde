@@ -29,32 +29,7 @@ void draw() {
   rotateX(-(mY-500)*PI*1/3200);
   rotateY((mX-750)*PI*1/1000);
   
-  //SLOT WHEELS
-  pushMatrix();
-    rotateZ(PI/2);
-    rotateY(PI/12);
-    stroke(0,0,0);
-    fill(255);
-    translate(50,-75,-50);
-    //Spinny and Randomy
-    if (spinTime > 0) {
-      rotateY(-spinTime*PI/10);
-      spinTime--;
-    } else if (spinTime == 0) {
-      reroll();
-      displayDice();
-      spinTime--;
-    } else {
-      displayDice();
-    }
-    fill(255);
-    // Cylinder function is not my code; check definition for source
-    cylinder(300,300,150,12);
-    translate(0,200,0);
-    cylinder(300,300,150,12);
-    translate(0,-400,0);
-    cylinder(300,300,150,12);
-  popMatrix();
+  
   //PULL BAR AND BALL
   pushMatrix();
     translate(420,300,-200);
@@ -85,7 +60,7 @@ void draw() {
     }
     text("COUNT: " + sum,0,-225);
   popMatrix();
-  
+  staticDecor();
 }
 
 class die {
