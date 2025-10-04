@@ -8,7 +8,26 @@ die theDevil;
 int [] rolls = new int [9];
 
 void draw() {
-  
+  lights();
+  background(150,0,0);
+  translate(750,500);
+  int mX,mY;
+  if(mouseY <= 400) {
+    mY = 400;
+  } else if (mouseY >= 600) {
+    mY = 600;
+  } else {
+    mY = mouseY;
+  }
+  if(mouseX <= 650) {
+    mX = 650;
+  } else if (mouseX >= 850) {
+    mX = 850;
+  } else {
+    mX = mouseX;
+  }
+  rotateX(-(mY-500)*PI*1/3200);
+  rotateY((mX-750)*PI*1/1000);
   
   //SLOT WHEELS
   pushMatrix();
@@ -37,36 +56,7 @@ void draw() {
     cylinder(300,300,150,12);
   popMatrix();
 
-  //PULL BAR AND BALL
-  pushMatrix();
-    translate(420,300,-200);
-    rotateX(ballRotate);
-    translate(0,-500,300);
-    fill(256,0,0);
-    noStroke();
-    sphere(80);
-    rotateX(-PI/4);
-    fill(150,150,150);
-    cylinder(40,40,450,12);
-    translate(20,450,0);
-    rotateX(PI/4);
-    rotateZ(PI/2);
-    cylinder(40,40,450,12);
-  popMatrix();
-  pushMatrix();
-    translate(0,0,140);\
-    fill(0);
-    rect(-200,-275,400,75);
-    textAlign(CENTER);
-    textSize(40);
-    fill(0,255,0);
-    translate(0,0,1);
-    int sum = 0;
-    for (int i = 0; i < 9; i++) {
-      sum = sum + rolls[i];
-    }
-    text("COUNT: " + sum,0,-225);
-  popMatrix();
+  
   staticDecor();
 }
 
