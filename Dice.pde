@@ -77,7 +77,7 @@ void draw() {
   pushMatrix();
     translate(0,0,140);
     fill(0,0,0);
-    rect(-200,-275,400,75);
+    
     textAlign(CENTER);
     textSize(40);
     fill(0,255,0);
