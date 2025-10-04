@@ -57,7 +57,22 @@ void draw() {
   popMatrix();
 
   //PULL BAR AND BALL
-  
+
+//COUNTER
+  pushMatrix();
+    translate(0,0,140);\
+    fill(0);
+    rect(-200,-275,400,75);
+    textAlign(CENTER);
+    textSize(40);
+    fill(0,255,0);
+    translate(0,0,1);
+    int sum = 0;
+    for (int i = 0; i < 9; i++) {
+      sum = sum + rolls[i];
+    }
+    text("COUNT: " + sum,0,-225);
+  popMatrix();
   staticDecor();
 }
 
