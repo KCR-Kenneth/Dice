@@ -56,6 +56,22 @@ void draw() {
     cylinder(300,300,150,12);
   popMatrix();
 
+  //PULL BAR AND BALL
+  pushMatrix();
+    translate(420,300,-200);
+    rotateX(ballRotate);
+    translate(0,-500,300);
+    fill(256,0,0);
+    noStroke();
+    sphere(80);
+    rotateX(-PI/4);
+    fill(150,150,150);
+    cylinder(40,40,450,12);
+    translate(20,450,0);
+    rotateX(PI/4);
+    rotateZ(PI/2);
+    cylinder(40,40,450,12);
+  popMatrix();
   
   staticDecor();
 }
