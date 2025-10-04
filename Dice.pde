@@ -193,11 +193,14 @@ void spin(){
   ballRotate = 0;
 }
 
-void mousePressed() {
-  redraw();
+void mouseDragged() {
+  if ((1096 < mouseX) && (mouseX < 1366) && (187 < mouseY) && (mouseY < 630)) {
+    ballRotate = -(mouseY-187)*PI/4/443;
+  }
+  if (mouseY >= 660) {
+    spin();
+  }
 }
-
-
 
 void staticDecor() {
   //MACHINE BACK
