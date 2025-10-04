@@ -57,9 +57,7 @@ void draw() {
   popMatrix();
 
   //PULL BAR AND BALL
-  pushMatrix();
-    
-  popMatrix();
+ 
   pushMatrix();
     translate(0,0,140);\
     fill(0);
