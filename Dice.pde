@@ -75,7 +75,7 @@ void draw() {
   
   //COUNTER
   pushMatrix();
-    translate(0,0,140);\
+    translate(0,0,140);
     fill(0,0,0);
     rect(-200,-275,400,75);
     textAlign(CENTER);
