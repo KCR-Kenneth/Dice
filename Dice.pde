@@ -4,8 +4,8 @@ void setup() {
 
 float ballRotate = 0;
 int spinTime = 0;
-boolean reroll = false;
 die theDevil;
+int [] rolls = new int [9];
 
 void draw() {
   lights();
@@ -36,11 +36,12 @@ void draw() {
     stroke(0,0,0);
     fill(255);
     translate(50,-75,-50);
+    //Spinny and Randomy
     if (spinTime > 0) {
       rotateY(-spinTime*PI/10);
       spinTime--;
     } else if (spinTime == 0) {
-      reroll = true;
+      reroll();
       displayDice();
       spinTime--;
     } else {
@@ -70,39 +71,34 @@ void draw() {
     rotateZ(PI/2);
     cylinder(40,40,450,12);
   popMatrix();
+  pushMatrix();
+    translate(0,0,140);\
+    fill(0);
+    rect(-200,-275,400,75);
+    textAlign(CENTER);
+    textSize(40);
+    fill(0,255,0);
+    translate(0,0,1);
+    int sum = 0;
+    for (int i = 0; i < 9; i++) {
+      sum = sum + rolls[i];
+    }
+    text("COUNT: " + sum,0,-225);
+  popMatrix();
   staticDecor();
 }
 
-void displayDice() {
-  pushMatrix();
-    translate(0,37.5,0);
-    theDevil = new die (0,0,250);
-    rotateX(PI/6);
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        theDevil = new die (0,0,300);
-        theDevil.show();
-      }
-      rotateX(-PI/6);
-    }
-  popMatrix();
-  //theDevil = new die (0,38,250);
-}
-
 class die {
-  int x,y,z,roll;
-  die (int tempX, int tempY, int tempZ) {
+  float x,y,z;
+  die (float tempX, float tempY, float tempZ) {
     x = tempX;
     y = tempY;
     z = tempZ;
-    if (reroll) {
-      roll = (int)(Math.random()*6) + 1;
-      reroll = false;
-    }
   }
   
-  void show() {
+  void show(int index) {
     fill(0);
+    int roll = rolls[index];
     pushMatrix();
       translate(x,y,z);
       if (roll == 1) {
@@ -168,7 +164,31 @@ class die {
   }
 }
 
-void roll() {
+void displayDice() {
+  pushMatrix();
+    translate(0,37.5,0);
+    rotateY(-PI/12);
+    rotateY(-PI/6);
+    translate(0,237.5,0);
+    for (int i = 0; i < 3; i++) {
+      
+      for (int j = 0; j < 3; j++) {
+        theDevil = new die (0,-j*(200),300);
+        theDevil.show(i*3+j);
+      }
+      rotateY(PI/6);
+    }
+  popMatrix();
+}
+
+void reroll() {
+    for (int i = 0; i < 9; i++) {
+      int roll = (int)(Math.random()*6) + 1;
+      rolls[i] = roll;
+    }
+}
+
+void spin(){
   spinTime = 100;
   ballRotate = 0;
 }
@@ -183,7 +203,7 @@ void mouseDragged() {
     ballRotate = -(mouseY-187)*PI/4/443;
   }
   if (mouseY >= 660) {
-    roll();
+    spin();
   }
 }
 
@@ -204,7 +224,7 @@ void staticDecor() {
     rect(-125,255,250,50);
     translate(0,0,-100);
     rect(-325,-400,650,100);
-    translate(0,0,10);
+    translate(0,0,1);
     textAlign(CENTER);
     textSize(125);
     fill(255,0,0);
