@@ -77,11 +77,11 @@ void draw() {
   pushMatrix();
     translate(0,0,140);
     fill(0,0,0);
-    
+    rect(-200,-275,400,75);
     textAlign(CENTER);
     textSize(40);
     fill(0,255,0);
-    translate(0,0,1);
+    translate(0,0,20);
     int sum = 0;
     for (int i = 0; i < 9; i++) {
       sum = sum + rolls[i];
@@ -222,7 +222,7 @@ void staticDecor() {
     rect(-125,255,250,50);
     translate(0,0,-100);
     rect(-325,-400,650,100);
-    translate(0,0,1);
+    translate(0,0,20;
     textAlign(CENTER);
     textSize(125);
     fill(255,0,0);
