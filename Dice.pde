@@ -34,7 +34,7 @@ void draw() {
     rotateZ(PI/2);
     rotateY(PI/12);
     stroke(0,0,0);
-    fill(255);
+    fill(255,255,255);
     translate(50,-75,-50);
     //Spinny and Randomy
     if (spinTime > 0) {
@@ -55,18 +55,26 @@ void draw() {
     translate(0,-400,0);
     cylinder(300,300,150,12);
   popMatrix();
-
   //PULL BAR AND BALL
-
-//COUNTER
   pushMatrix();
-    translate(0,0,140);\
-    fill(0);
-    rect(-200,-275,400,75);
-    textAlign(CENTER);
-    textSize(40);
-    fill(0,255,0);
-    translate(0,0,1);
+    translate(420,300,-200);
+    rotateX(ballRotate);
+    translate(0,-500,300);
+    fill(256,0,0);
+    noStroke();
+    sphere(80);
+    rotateX(-PI/4);
+    fill(150,150,150);
+    cylinder(40,40,450,12);
+    translate(20,450,0);
+    rotateX(PI/4);
+    rotateZ(PI/2);
+    cylinder(40,40,450,12);
+  popMatrix();
+  
+  //COUNTER
+  pushMatrix();
+    
     int sum = 0;
     for (int i = 0; i < 9; i++) {
       sum = sum + rolls[i];
