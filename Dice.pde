@@ -1,341 +1,241 @@
 void setup() {
-  size(1500,1000, P3D);
-  frameRate(60);
+  size (1500,1000,P3D);
 }
 
-//Distance between duelists
-int distance = 1300;
-
-// Parameters for bolts
-int miniChange = 50;
-int range = 100;
-int xIncrement = 50;
-int limit = distance/2 + 2000;
-
-// Note: I have no clue how to make it so variable names can be composed of variable strings...
-// so copy and pasting it is!
-  int xs1 = -470;
-  int ys1 = 100;
-  int zs1 = 0;
-  int xf1;
-  int yf1;
-  int zf1;
-  
-  int xs2 = -470;
-  int ys2 = 100;
-  int zs2 = 0;
-  int xf2;
-  int yf2;
-  int zf2;
-  
-  int xs3 = -470;
-  int ys3 = 100;
-  int zs3 = 0;
-  int xf3;
-  int yf3;
-  int zf3;
-  
-  int xs4 = -470;
-  int ys4 = 100;
-  int zs4 = 0;
-  int xf4;
-  int yf4;
-  int zf4;
-  
-  int xs5 = -470;
-  int ys5 = 100;
-  int zs5 = 0;
-  int xf5;
-  int yf5;
-  int zf5;
-  
-  int xs6 = -470;
-  int ys6 = 100;
-  int zs6 = 0;
-  int xf6;
-  int yf6;
-  int zf6;
-  
-  int xs7 = -470;
-  int ys7 = 100;
-  int zs7 = 0;
-  int xf7;
-  int yf7;
-  int zf7;
-  
-  boolean left = true;
-  boolean go;
-  
+float ballRotate = 0;
+int spinTime = 0;
+die theDevil;
+int [] rolls = new int [9];
 
 void draw() {
-  background(85,95,148);
-  
-  // 3D Manuever
+  lights();
+  background(150,0,0);
   translate(750,500);
-  int y;
-  if (mouseY > 300) {
-    y = mouseY;
+  int mX,mY;
+  if(mouseY <= 400) {
+    mY = 400;
+  } else if (mouseY >= 600) {
+    mY = 600;
   } else {
-    y = 300;
+    mY = mouseY;
   }
-  rotateX(-(y-500)*PI*1/1500);
-  rotateY((mouseX-750)*PI*1/500);
-  noStroke();
+  if(mouseX <= 650) {
+    mX = 650;
+  } else if (mouseX >= 850) {
+    mX = 850;
+  } else {
+    mX = mouseX;
+  }
+  rotateX(-(mY-500)*PI*1/3200);
+  rotateY((mX-750)*PI*1/1000);
   
-  //Lightning!
-    stroke(41,171,226);
-    strokeWeight(15);
-    if (left) {
-      go = xs1 < limit;
+  //SLOT WHEELS
+  pushMatrix();
+    rotateZ(PI/2);
+    rotateY(PI/12);
+    stroke(0,0,0);
+    fill(255);
+    translate(50,-75,-50);
+    //Spinny and Randomy
+    if (spinTime > 0) {
+      rotateY(-spinTime*PI/10);
+      spinTime--;
+    } else if (spinTime == 0) {
+      reroll();
+      displayDice();
+      spinTime--;
     } else {
-      go = xs1 > -limit;
+      displayDice();
     }
-    
-    if (go) {
-      if (left) {
-        xf1 = xs1 + xIncrement;
-        xf2 = xs2 + xIncrement;
-        xf3 = xs3 + xIncrement;
-        xf4 = xs1 + xIncrement;
-        xf5 = xs2 + xIncrement;
-        xf6 = xs3 + xIncrement;
-        xf7 = xs3 + xIncrement;
-      } else {
-        xf1 = xs1 - xIncrement;
-        xf2 = xs2 - xIncrement;
-        xf3 = xs3 - xIncrement;
-        xf4 = xs1 - xIncrement;
-        xf5 = xs2 - xIncrement;
-        xf6 = xs3 - xIncrement;
-        xf7 = xs1 - xIncrement;
-      }
-      
-      yf1 = ys1 + (int)(Math.random()*range - miniChange);
-      zf1 = zs1 + (int)(Math.random()*range - miniChange);
-      line (xs1,ys1,zs1,xf1,yf1,zf1);
-      xs1 = xf1;
-      ys1 = yf1;
-      zs1 = zf1;
-      
-      yf2 = ys2 + (int)(Math.random()*range - miniChange);
-      zf2 = zs2 + (int)(Math.random()*range - miniChange);
-      line (xs2,ys2,zs2,xf2,yf2,zf2);
-      xs2 = xf2;
-      ys2 = yf2;
-      zs2 = zf2;
-      
-      yf3 = ys3 + (int)(Math.random()*range - miniChange);
-      zf3 = zs3 + (int)(Math.random()*range - miniChange);
-      line (xs3,ys3,zs3,xf3,yf3,zf3);
-      xs3 = xf3;
-      ys3 = yf3;
-      zs3 = zf3;
-      
-      yf4 = ys4 + (int)(Math.random()*range - miniChange);
-      zf4 = zs4 + (int)(Math.random()*range - miniChange);
-      line (xs4,ys4,zs4,xf4,yf4,zf4);
-      xs4 = xf4;
-      ys4 = yf4;
-      zs4 = zf4;
-      
-      yf5 = ys5 + (int)(Math.random()*range - miniChange);
-      zf5 = zs5 + (int)(Math.random()*range - miniChange);
-      line (xs5,ys5,zs5,xf5,yf5,zf5);
-      xs5 = xf5;
-      ys5 = yf5;
-      zs5 = zf5;
-      
-      yf6 = ys6 + (int)(Math.random()*range - miniChange);
-      zf6 = zs6 + (int)(Math.random()*range - miniChange);
-      line (xs6,ys6,zs6,xf6,yf6,zf6);
-      xs6 = xf6;
-      ys6 = yf6;
-      zs6 = zf6;
-      
-      yf7 = ys7 + (int)(Math.random()*range - miniChange);
-      zf7 = zs7 + (int)(Math.random()*range - miniChange);
-      line (xs7,ys7,zs7,xf7,yf7,zf7);
-      xs7 = xf7;
-      ys7 = yf7;
-      zs7 = zf7;
+    fill(255);
+    // Cylinder function is not my code; check definition for source
+    cylinder(300,300,150,12);
+    translate(0,200,0);
+    cylinder(300,300,150,12);
+    translate(0,-400,0);
+    cylinder(300,300,150,12);
+  popMatrix();
+  //PULL BAR AND BALL
+  pushMatrix();
+    translate(420,300,-200);
+    rotateX(ballRotate);
+    translate(0,-500,300);
+    fill(256,0,0);
+    noStroke();
+    sphere(80);
+    rotateX(-PI/4);
+    fill(150,150,150);
+    cylinder(40,40,450,12);
+    translate(20,450,0);
+    rotateX(PI/4);
+    rotateZ(PI/2);
+    cylinder(40,40,450,12);
+  popMatrix();
+  pushMatrix();
+    translate(0,0,140);\
+    fill(0);
+    rect(-200,-275,400,75);
+    textAlign(CENTER);
+    textSize(40);
+    fill(0,255,0);
+    translate(0,0,1);
+    int sum = 0;
+    for (int i = 0; i < 9; i++) {
+      sum = sum + rolls[i];
     }
+    text("COUNT: " + sum,0,-225);
+  popMatrix();
+  staticDecor();
+}
+
+class die {
+  float x,y,z;
+  die (float tempX, float tempY, float tempZ) {
+    x = tempX;
+    y = tempY;
+    z = tempZ;
+  }
   
-  decorate();
+  void show(int index) {
+    fill(0);
+    int roll = rolls[index];
+    pushMatrix();
+      translate(x,y,z);
+      if (roll == 1) {
+        sphere(10);
+      } else if (roll == 2) {
+        pushMatrix();
+          translate(-37.5,-37.5,0);
+          sphere(10);
+          translate(75,75,0);
+          sphere(10);
+        popMatrix();
+      } else if (roll == 3) {
+        sphere(10);
+        pushMatrix();
+          translate(-37.5,-37.5,0);
+          sphere(10);
+          translate(75,75,0);
+          sphere(10);
+        popMatrix();
+      } else if (roll == 4) {
+        pushMatrix();
+          translate(-37.5,-37.5,0);
+          sphere(10);
+          translate(75,0,0);
+          sphere(10);
+          translate(0,75,0);
+          sphere(10);
+          translate(-75,0,0);
+          sphere(10);
+        popMatrix();
+      } else if (roll == 5) {
+        sphere(10);
+        pushMatrix();
+          translate(-37.5,-37.5,0);
+          sphere(10);
+          translate(75,0,0);
+          sphere(10);
+          translate(0,75,0);
+          sphere(10);
+          translate(-75,0,0);
+          sphere(10);
+        popMatrix();
+      } else {
+        pushMatrix();
+          translate(0,-37.5,0);
+          sphere(10);
+          translate(0,75,0);
+          sphere(10);
+        popMatrix();
+        pushMatrix();
+          translate(-37.5,-37.5,0);
+          sphere(10);
+          translate(75,0,0);
+          sphere(10);
+          translate(0,75,0);
+          sphere(10);
+          translate(-75,0,0);
+          sphere(10);
+        popMatrix();
+        
+      }
+    popMatrix();
+  }
+}
+
+void displayDice() {
+  pushMatrix();
+    translate(0,37.5,0);
+    rotateY(-PI/12);
+    rotateY(-PI/6);
+    translate(0,237.5,0);
+    for (int i = 0; i < 3; i++) {
+      
+      for (int j = 0; j < 3; j++) {
+        theDevil = new die (0,-j*(200),300);
+        theDevil.show(i*3+j);
+      }
+      rotateY(PI/6);
+    }
+  popMatrix();
+}
+
+void reroll() {
+    for (int i = 0; i < 9; i++) {
+      int roll = (int)(Math.random()*6) + 1;
+      rolls[i] = roll;
+    }
+}
+
+void spin(){
+  spinTime = 100;
+  ballRotate = 0;
 }
 
 void mousePressed() {
-  
-    left =!left;
-    if (left) {
-      xs1 = -distance/2 + 230;
-      xs2 = -distance/2 + 230;
-      xs3 = -distance/2 + 230;
-      xs4 = -distance/2 + 230;
-      xs5 = -distance/2 + 230;
-      xs6 = -distance/2 + 230;
-      xs7 = -distance/2 + 230;
-    } else {
-      xs1 = distance/2 - 230;
-      xs2 = distance/2 - 230;
-      xs3 = distance/2 - 230;
-      xs4 = distance/2 - 230;
-      xs5 = distance/2 - 230;
-      xs6 = distance/2 - 230;
-      xs7 = distance/2 - 230;
-    }
-    ys1 = 100;
-    zs1 = 0;
-    ys2 = 100;
-    zs2 = 0;
-    ys3 = 100;
-    zs3 = 0;
-    ys4 = 100;
-    zs4 = 0;
-    ys5 = 100;
-    zs5 = 0;
-    ys6 = 100;
-    zs6 = 0;
-    ys7 = 100;
-    zs7 = 0;
+  redraw();
 }
 
-void decorate() {
-  lights();
-  ambientLight(125,45,45);
-  directionalLight(255,255,255,0,0,1);
-  
-  // Creating wizards
-  stroke(255,255,255);
-  noStroke();
-  strokeWeight(2);
-  fill(255,220,50);
-  translate(-distance/2,0);
-  sphere(100);
-  fill(50,50,50);
-  stroke(10,10,10);
-  // Following function is not mine; check function declaration for source  
-  cylinder(100,20,400,10);
+
+
+void staticDecor() {
+  //MACHINE BACK
   pushMatrix();
-    noStroke();
-    translate (0, 150, -30);
-    rotateX(-PI/6);
-    for (int z = 0; z < 30; z++) {
-      rect(-10,0,20,150);
-      translate(0,0,-1);
-    }
+    translate(0,0,-50);
+    fill(0);
+    rect(-300,-350, 600, 900);
   popMatrix();
+  //YELLOW FRAME
   pushMatrix();
-    translate (0, 150, 30);
-    rotateX(PI/6);
-    for (int z = 0; z < 30; z++) {
-      rect(-10,0,150,50);
-      translate(0,0,1);
-    }
-    fill(100, 60, 10);
-    translate(100,0,-40);
-    rotate(-PI/6);
-    for (int z = 0; z < 15; z++) {
-      rect(-10,0,150,30);
-      translate(0,0,1);
-    }
+    translate(0,0,125);
+    fill(255,225,0);
+    rect(-325,-300,200,600);
+    rect(125,-300,200,600);
+    rect(-125,-300,250,110);
+    rect(-125,255,250,50);
+    translate(0,0,-100);
+    rect(-325,-400,650,100);
+    translate(0,0,1);
+    textAlign(CENTER);
+    textSize(125);
+    fill(255,0,0);
+    text("$ JACKPOT $",0,-300);
   popMatrix();
-  
-  
-  translate(distance,0);
-  fill(255,220,50);
-  sphere(100);
-  fill(50,50,50);
-  stroke(10,10,10);
-  cylinder(100,20,400,10);
+  //BOTTOM FRAME
   pushMatrix();
-    noStroke();
-    translate (0, 150, 30);
-    rotateX(PI/6);
-    for (int z = 0; z < 30; z++) {
-      rect(-10,0,20,150);
-      translate(0,0,1);
-    }
-  popMatrix();
-  pushMatrix();
-    translate (0, 150, -30);
-    rotateX(-PI/6);
-    for (int z = 0; z < 30; z++) {
-      rect(-160,0,150,50);
-      translate(0,0,-1);
-    }
-    fill(100, 60, 10);
-    translate(-100,0,30);
-    rotate(PI/6);
-    for (int z = 0; z < 15; z++) {
-      rect(-160,0,150,30);
-      translate(0,0,1);
-    }
-  popMatrix();
-  
-  
-  // Making the background
-  translate (-distance/2,0,0);
-  
-  pushMatrix();
-    fill(255, 89, 89);
-    translate(3000,-1600,-4000);
-    sphere(200);
-  popMatrix();
-  
-  pushMatrix(); 
     rotateX(PI/2);
-    translate(0,0,-402);
-    fill(80, 40, 10);
-    rect(-2500,-300,5000,600);
-    translate(0,0,-200);
-    fill (150,150,150);
-    rect(-3000,-2500,6000,5000);
-  popMatrix();
-  
-  pushMatrix();
-    fill(80, 40, 10);
-    translate(0,0,-200);
-    rect(-2500,402,5000,200);
-    translate(0,0,400);
-    rect(-2500,402,5000,200);
-  popMatrix();
-  
-  pushMatrix();
-    translate(0,0,-2500);
-    fill(75,75,75);
-    rect(-3000,-100,6000,700);
-    for(int i = 0; i < 6; i++) {
-      rect(-3000 + i*1080, -2000,600,1900);
-    }
-    translate(0,0,5000);
-    rect (-3000,-100,6000,700);
-    for(int i = 0; i < 6; i++) {
-      rect(-3000 + i*1080, -2000,600,1900);
-    }
-  popMatrix();
-  pushMatrix();
-    rotateY(PI/2);
-    translate(0,0,-3000);
-    rect(-2500,-7000,5000,11000);
-    
-    translate(0,0,6000);
-    rect(-2500,-7000,5000,11000);
-  popMatrix();
-  
-  pushMatrix();
-    rotateX(0.588);
-    translate(0,0,3205);
-    rect(-3000,-4807.5, 6000,4807.5);
-  popMatrix();
-  pushMatrix();
-    rotateY(PI);
-    rotateX(0.588);
-    translate(0,0,3205);
-    rect(-3000,-4807.5, 6000,4807.5);
+    translate(0,0,-300);
+    fill(255,225,0);
+    rect(-325,0,650,300);
+    rotateX(-PI/2);
+    translate(0,0,250);
+    rect(-325,0,650,200);
   popMatrix();
 }
 
 // Source: apex_nd on processing.org forums
+// Author: Abbas Noureddine
 // https://forum.processing.org/one/topic/draw-a-cone-cylinder-in-p3d.html
 void cylinder(float top, float bottom, float h, int sides)
 {
